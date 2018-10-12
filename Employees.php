@@ -17,7 +17,7 @@
 <?php
 include "DatabaseConnection.php";
 try {
-    $stmt = $conn->prepare("SELECT EmployeeID, company, LastName, FirstName, Address, City, Title FROM Employees");
+  $stmt = $conn->prepare("SELECT EmployeeID, TitleOfCourtesy,  FirstName, LastName, Address, City, Country, Title FROM Employees");
     $stmt->execute();
 
     // set the resulting array to associative
@@ -27,10 +27,11 @@ try {
     foreach($stmt->fetchAll() as $k=>$v) {
         $json[] = $v;
         $count++;
-    }
+
     $count = $stmt->rowCount();
     $jsonData = json_encode($json);
     file_put_contents('employeesJSON.json', $jsonData);
+}
 }
 catch(PDOException $e) {
     echo "Error: " . $e->getMessage();
